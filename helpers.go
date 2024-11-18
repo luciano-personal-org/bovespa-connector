@@ -1,5 +1,5 @@
 // Package helpers contains helper functions, for example, the function to read the buffer from the connection.
-package connections
+package bovespa_connector
 
 import (
 	"context"

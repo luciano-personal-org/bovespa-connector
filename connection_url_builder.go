@@ -1,5 +1,5 @@
 // Package general provides a function to build a connection URL based on the given name.
-package connections
+package bovespa_connector
 
 import (
 	"fmt"

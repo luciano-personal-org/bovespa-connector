@@ -1,4 +1,4 @@
-package connections
+package bovespa_connector
 
 import (
 	"context"
@@ -6,10 +6,10 @@ import (
 	"net"
 	"strconv"
 
+	"github.com/luciano-personal-org/bovespa-connector/exception"
 	exceptioncore "github.com/luciano-personal-org/exception"
 
 	"github.com/luciano-personal-org/config"
-	"github.com/luciano-personal-org/connections/connections_exception"
 )
 
 // Initialize the custom error
@@ -27,7 +27,7 @@ func ConnectToCedroServer(ctx context.Context, endpoint string, simulation bool,
 	conn, err := net.Dial("tcp4", endpoint)
 	// Check if there was an error connecting to the Cedro server
 	if err != nil {
-		custom_error = connections_exception.CedroConnectionError
+		custom_error = exception.CedroConnectionError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to connect into Quotes Server on ConnectToCedroServer")
 		exceptioncore.DoPanic(custom_error)
@@ -42,7 +42,7 @@ func ConnectToCedroServer(ctx context.Context, endpoint string, simulation bool,
 	bufferSize, err := strconv.Atoi(bufferSizeStr)
 	// Check if there was an error converting the buffer size
 	if err != nil {
-		custom_error = connections_exception.BufSizeParameterError
+		custom_error = exception.BufSizeParameterError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to convert the buffer size parameter on ConnectToCedroServer")
 		exceptioncore.DoPanic(custom_error)
@@ -54,7 +54,7 @@ func ConnectToCedroServer(ctx context.Context, endpoint string, simulation bool,
 	_, err = Readbuffer(ctx, conn, buffer)
 	// Check if there was an error reading the buffer to receive a message
 	if err != nil {
-		custom_error = connections_exception.ReceivingMessageError
+		custom_error = exception.ReceivingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to receive a message from Quotes Server on ConnectToCedroServer")
 		exceptioncore.DoPanic(custom_error)
@@ -80,7 +80,7 @@ func SoftwareKey(ctx context.Context, softwarekey string, conn net.Conn, configu
 	_, err = conn.Write([]byte(message))
 	// Check if there was an error sending the message
 	if err != nil {
-		custom_error = connections_exception.SendingMessageError
+		custom_error = exception.SendingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to send a message with Software Key to Quotes Server on SoftwareKey")
 		exceptioncore.DoPanic(custom_error)
@@ -91,7 +91,7 @@ func SoftwareKey(ctx context.Context, softwarekey string, conn net.Conn, configu
 	bufferSize, err := strconv.Atoi(bufferSizeStr)
 	// Check if there was an error converting the buffer size
 	if err != nil {
-		custom_error = connections_exception.BufSizeParameterError
+		custom_error = exception.BufSizeParameterError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to convert the buffer size parameter on SoftwareKey")
 		exceptioncore.DoPanic(custom_error)
@@ -103,7 +103,7 @@ func SoftwareKey(ctx context.Context, softwarekey string, conn net.Conn, configu
 	_, err = Readbuffer(ctx, conn, buffer)
 	// Check if there was an error reading the buffer to receive a message
 	if err != nil {
-		custom_error = connections_exception.ReceivingMessageError
+		custom_error = exception.ReceivingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to receive a message of Software Key sent to Quotes Server on SoftwareKey")
 		exceptioncore.DoPanic(custom_error)
@@ -126,7 +126,7 @@ func UserLogin(ctx context.Context, username string, conn net.Conn, configuratio
 	_, err = conn.Write([]byte(message))
 	// Check if there was an error sending the message
 	if err != nil {
-		custom_error = connections_exception.SendingMessageError
+		custom_error = exception.SendingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to send a message with User Login to Quotes Server on UserLogin")
 		exceptioncore.DoPanic(custom_error)
@@ -138,7 +138,7 @@ func UserLogin(ctx context.Context, username string, conn net.Conn, configuratio
 	bufferSize, err := strconv.Atoi(bufferSizeStr)
 	// Check if there was an error converting the buffer size
 	if err != nil {
-		custom_error = connections_exception.BufSizeParameterError
+		custom_error = exception.BufSizeParameterError
 		custom_error.SetOriginalError(err)
 		exceptioncore.DoPanic(custom_error)
 	}
@@ -149,7 +149,7 @@ func UserLogin(ctx context.Context, username string, conn net.Conn, configuratio
 	_, err = Readbuffer(ctx, conn, buffer)
 	// Check if there was an error reading the buffer to receive a message
 	if err != nil {
-		custom_error = connections_exception.ReceivingMessageError
+		custom_error = exception.ReceivingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to receive a message of User Login sent to Quotes Server on UserLogin")
 		exceptioncore.DoPanic(custom_error)
@@ -172,7 +172,7 @@ func UserPassword(ctx context.Context, password string, conn net.Conn, configura
 	_, err = conn.Write([]byte(message))
 	// Check if there was an error sending the message
 	if err != nil {
-		custom_error = connections_exception.SendingMessageError
+		custom_error = exception.SendingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to send a message with User Password to Quotes Server on UserPassword")
 		exceptioncore.DoPanic(custom_error)
@@ -183,7 +183,7 @@ func UserPassword(ctx context.Context, password string, conn net.Conn, configura
 	bufferSize, err := strconv.Atoi(bufferSizeStr)
 	// Check if there was an error converting the buffer size
 	if err != nil {
-		custom_error = connections_exception.BufSizeParameterError
+		custom_error = exception.BufSizeParameterError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to convert the buffer size parameter on UserPassword")
 		exceptioncore.DoPanic(custom_error)
@@ -195,7 +195,7 @@ func UserPassword(ctx context.Context, password string, conn net.Conn, configura
 	_, err = Readbuffer(ctx, conn, buffer)
 	// Check if there was an error reading the buffer to receive a message
 	if err != nil {
-		custom_error = connections_exception.ReceivingMessageError
+		custom_error = exception.ReceivingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to receive a message of User Password sent to Quotes Server on UserPassword")
 		exceptioncore.DoPanic(custom_error)
@@ -226,7 +226,7 @@ func NewCedroConnector(ctx context.Context, configuration config.Config) (net.Co
 	simulation, err := strconv.ParseBool(configuration.Get("connector_processor.simulation"))
 	// Check if there was an error converting the simulation parameter
 	if err != nil {
-		custom_error = connections_exception.SimulationParameterError
+		custom_error = exception.SimulationParameterError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to convert the Simulation parameter on NewCedroConnector")
 		exceptioncore.DoPanic(custom_error)
@@ -239,7 +239,7 @@ func NewCedroConnector(ctx context.Context, configuration config.Config) (net.Co
 	err = SoftwareKey(ctx, softwarekey, conn, configuration)
 	// Check if there was an error sending the message
 	if err != nil {
-		custom_error = connections_exception.SendingMessageError
+		custom_error = exception.SendingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to finish Software Key to Quotes Server on NewCedroConnector")
 		exceptioncore.DoPanic(custom_error)
@@ -249,7 +249,7 @@ func NewCedroConnector(ctx context.Context, configuration config.Config) (net.Co
 	err = UserLogin(ctx, username, conn, configuration)
 	// Check if there was an error sending the message
 	if err != nil {
-		custom_error = connections_exception.SendingMessageError
+		custom_error = exception.SendingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to finish User Login to Quotes Server on NewCedroConnector")
 		exceptioncore.DoPanic(custom_error)
@@ -259,7 +259,7 @@ func NewCedroConnector(ctx context.Context, configuration config.Config) (net.Co
 	err = UserPassword(ctx, password, conn, configuration)
 	// Check if there was an error sending the message
 	if err != nil {
-		custom_error = connections_exception.SendingMessageError
+		custom_error = exception.SendingMessageError
 		custom_error.SetOriginalError(err)
 		custom_error.SetDetails("When trying to finish User Password to Quotes Server on NewCedroConnector")
 		exceptioncore.DoPanic(custom_error)
